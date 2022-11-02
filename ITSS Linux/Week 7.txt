@@ -1,0 +1,62 @@
+1. Check current network status
+	#ifconfig
+		<result>
+			eth0
+			eth1
+			em0
+			wlan0
+
+	#ifconfig eth0 down
+
+	#ifconfig eth0 up
+
+2.
+	To temporarilyl change the address of any card for the login session (replace X a right octal number)
+	#ifconfig eth0 172.28.134.X netmask 255.255.255.0
+
+	#route add default GW 172.28.134.5
+
+	#ifconfig
+
+	#route
+
+3.
+	To assign a static address
+		*Ubuntu: for dhcp service
+			#more /ect/network/intefaces
+			auto eth0
+			iface eth0 inet static
+			address 172.28.134.X
+			netmask 255.255.255.0
+			gateway 172.28.134.5
+			dns-nameservers 8.8.8.8
+					8.8.4.4
+			
+			RESTART
+			sudo /ect/init.d/networking restart OR sudo service networking restart
+		*fedora
+			for dhcp service (by default)
+			#more /ect/sysconfig/network-scripts/ifcfg-eth0
+				DEVICE=eth0
+				BOOTPROTO=none
+				ONBOOT=yes
+			For static service 
+			#nano /ect/sysconfig/network-scripts/ifcfg-eth0
+				DEVICE=eth0
+				BOOTPROTO=none
+				ONBOOT=yes
+				NETMASK=255.255.255.0
+				IPADDR=172.28.134.X
+				GATEWAY=172.28.134.5
+			RESTART network
+			#/ect/init.d/network restart
+	Check for your dns
+	#more /ect/resolv.conf
+
+
+Excercise:
+1.Check your current network status, check routing table and dns server
+2.Change network parameters temporarily
+3.Assign static network parameter permanently
+4.Choose a partner, using scp service try tu upload download files with that partner
+			
